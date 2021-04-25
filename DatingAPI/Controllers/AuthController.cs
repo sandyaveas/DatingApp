@@ -50,6 +50,7 @@ namespace DatingAPI.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(User user)
         {
+
             user.Username = user.Username.ToLower();
 
             var userExists = await _authRepo.Login(user);

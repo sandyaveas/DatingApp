@@ -14,7 +14,7 @@
       "launchBrowser": true,
       "launchUrl": "api/weatherforecast",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
     "DatingAPI": {

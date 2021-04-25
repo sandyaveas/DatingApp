@@ -14,15 +14,15 @@ export class AppComponent {
    *
    */
   constructor(private http: HttpClient) {
-    this.getWeather();
+    // this.getWeather();
   }
 
-  getWeather() {
-    this.http.get('http://localhost:59909/weatherforecast').subscribe(response =>{
-      debugger;
-      this.weather = response;
-    }, error => {
-      console.error(error);
-    })
-  }
+  // getWeather() {
+  //   this.http.get('http://localhost:59909/api/weatherforecast').subscribe(response =>{
+  //     debugger;
+  //     this.weather = response;
+  //   }, error => {
+  //     console.error(error);
+  //   })
+  // }
 }
