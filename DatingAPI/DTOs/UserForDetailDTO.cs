@@ -1,30 +1,21 @@
-﻿using System;
+﻿using DatingAPI.Models;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DatingAPI.Models
+namespace DatingAPI.DTOs
 {
-    public class User
+    public class UserForDetailDTO
     {
+
         public int Id { get; set; }
 
-        [Required]
         public string Username { get; set; }
-
-        [Required]
-        [NotMapped]
-        public string Password { get; set; }
-
-        public byte[] PasswordHash { get; set; }
-
-        public byte[] PasswordSalt { get; set; }
 
         public string Gender { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public int Age { get; set; }
 
         public string KnownAs { get; set; }
 
@@ -42,6 +33,8 @@ namespace DatingAPI.Models
 
         public string Country { get; set; }
 
-        public List<Photo> Photos { get; set; }
+        public string PhotoUrl { get; set; }
+
+        public List<PhotosForDetailDTO> Photos { get; set; }
     }
 }

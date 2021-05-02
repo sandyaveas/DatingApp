@@ -24,6 +24,7 @@ namespace DatingAPI.Controllers
         private readonly IAuthRepository _authRepo;
         private readonly IConfiguration _config;
 
+
         public AuthController(IAuthRepository authRepository, IConfiguration configuration)
         {
             _authRepo = authRepository;
