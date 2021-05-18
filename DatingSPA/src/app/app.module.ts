@@ -1,21 +1,36 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgxGalleryModule } from 'ngx-gallery-9';
 
+import {routes} from './routes.routing';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './_services/error.intercepter';
-import { MemberListComponent } from './member-list/member-list.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
 import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { environment } from 'src/environments/environment';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { MemberDetailResolver } from './_resolver/member-detail.resolver';
+import { MemberListResolver } from './_resolver/member-list.resolver';
+import { MemberEditResolver } from './_resolver/member-edit.resolver';
 
-import {routes} from './routes.routing';
+
+
+export function tokenGetter(){
+  return sessionStorage.getItem('token');
+}
 
 
 @NgModule({
@@ -26,17 +41,34 @@ import {routes} from './routes.routing';
       RegisterComponent,
       MemberListComponent,
       ListsComponent,
-      MessagesComponent
+      MessagesComponent,
+      MemberCardComponent,
+      MemberDetailComponent,
+      MemberEditComponent
    ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    NgxGalleryModule,
+    JwtModule.forRoot({
+      config : {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:59909"],
+        disallowedRoutes:["localhost:59909/api/auth/"]
+      }
+    })
   ],
-  providers: [ErrorInterceptorProvider],
+  providers: [
+    ErrorInterceptorProvider, 
+    MemberDetailResolver, 
+    MemberListResolver,
+    MemberEditResolver
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

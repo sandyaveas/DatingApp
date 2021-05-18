@@ -122,15 +122,15 @@
   {
     "Username": "Naveen",
     "Gender": "male",
-    "DateOfBirth": "1979-07-29",
+    "DateOfBirth": "1987-03-10",
     "Password": "1234",
     "KnownAs": "Naveen",
     "Created": "2017-07-03",
     "LastActive": "2017-07-03",
     "Introduction": "Amet enim excepteur aliqua duis exercitation laboris ad anim sit dolore commodo incididunt. Cupidatat velit nisi amet sint ut tempor aliqua minim exercitation excepteur eu. Duis officia reprehenderit labore ad sint ullamco in ea et magna excepteur excepteur laboris elit. Ea velit consectetur sunt anim minim laborum amet commodo aute in qui aliqua reprehenderit. Cillum sit nostrud laborum dolore occaecat excepteur amet elit commodo sit ea culpa incididunt adipisicing. Labore non nostrud labore nulla officia quis fugiat culpa in veniam quis id. Ea amet fugiat occaecat cupidatat occaecat laborum sint dolor voluptate et nisi anim duis.\r\n",
     "LookingFor": "Occaecat anim non dolore proident et magna excepteur labore proident commodo labore excepteur ea culpa. Adipisicing do cupidatat elit eu. Aliqua laborum officia ipsum enim nulla labore sint proident sit irure aute pariatur amet Lorem. Pariatur labore laborum incididunt enim ad. Fugiat quis esse exercitation velit velit commodo duis nisi ex eiusmod dolor sit velit. Ipsum culpa esse labore nostrud elit fugiat. Cillum culpa nostrud ad aute ipsum adipisicing qui incididunt adipisicing.\r\n",
-    "City": "Thatcher",
-    "Country": "Guadeloupe",
+    "City": "Mumbai",
+    "Country": "India",
     "Photos": [
       {
         "url": "https://randomuser.me/api/portraits/men/79.jpg",
@@ -142,7 +142,7 @@
   {
     "Username": "Sandeep",
     "Gender": "male",
-    "DateOfBirth": "1957-08-04",
+    "DateOfBirth": "1992-02-11",
     "Password": "1234",
     "KnownAs": "Sandeep",
     "Created": "2017-02-20",
@@ -153,7 +153,7 @@
     "Country": "India",
     "Photos": [
       {
-        "url": "https://randomuser.me/api/portraits/men/59.jpg",
+        "url": "https://randomuser.me/api/portraits/men/11.jpg",
         "isMain": true,
         "description": "Exercitation Lorem cupidatat et ex in minim culpa."
       }
