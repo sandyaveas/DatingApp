@@ -41,5 +41,10 @@ namespace DatingAPI.DataModel
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<Photo> GetPhoto(int id)
+        {
+            return await _context.Photos.FirstOrDefaultAsync(a => a.Id == id);
+        }
     }
 }

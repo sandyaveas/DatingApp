@@ -13,5 +13,7 @@ namespace DatingAPI.Interfaces
         Task<bool> SaveAll();
         Task<List<User>> GetUsers();
         Task<User> GetUser(int id);
+        Task<Photo> GetPhoto(int id);
+
     }
 }

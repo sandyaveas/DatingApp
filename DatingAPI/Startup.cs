@@ -40,7 +40,7 @@ namespace DatingAPI
             );
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("myConn")));
             services.AddCors();
-            
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
