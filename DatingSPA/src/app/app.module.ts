@@ -25,11 +25,13 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { MemberDetailResolver } from './_resolver/member-detail.resolver';
 import { MemberListResolver } from './_resolver/member-list.resolver';
 import { MemberEditResolver } from './_resolver/member-edit.resolver';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 
 export function tokenGetter(){
-  return sessionStorage.getItem('token');
+  return localStorage.getItem('token');
 }
 
 
@@ -44,7 +46,8 @@ export function tokenGetter(){
       MessagesComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorComponent
    ],
   imports: [
     BrowserModule,
@@ -55,6 +58,7 @@ export function tokenGetter(){
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(routes),
     NgxGalleryModule,
+    FileUploadModule,
     JwtModule.forRoot({
       config : {
         tokenGetter: tokenGetter,

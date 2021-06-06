@@ -20,7 +20,7 @@ namespace DatingAPI.DataModel
         public async Task<User> Login(User user)
         {
             
-            var userExists = await _dataContext.Users.FirstOrDefaultAsync(a => a.Username == user.Username);
+            var userExists = await _dataContext.Users.Include(a=> a.Photos).FirstOrDefaultAsync(a => a.Username == user.Username);
 
             if (userExists is not User)
                 return null;

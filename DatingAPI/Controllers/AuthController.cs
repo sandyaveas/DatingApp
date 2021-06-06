@@ -1,4 +1,6 @@
-﻿using DatingAPI.Interfaces;
+﻿using AutoMapper;
+using DatingAPI.DTOs;
+using DatingAPI.Interfaces;
 using DatingAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,12 +25,14 @@ namespace DatingAPI.Controllers
     {
         private readonly IAuthRepository _authRepo;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
 
-        public AuthController(IAuthRepository authRepository, IConfiguration configuration)
+        public AuthController(IAuthRepository authRepository, IConfiguration configuration, IMapper mapper)
         {
             _authRepo = authRepository;
             _config = configuration;
+            _mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -44,7 +48,7 @@ namespace DatingAPI.Controllers
             await _authRepo.Register(user);
 
             return StatusCode((int)HttpStatusCode.Created);
-            
+
         }
 
         [AllowAnonymous]
@@ -80,10 +84,15 @@ namespace DatingAPI.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
+            var userDetail = _mapper.Map<UserForListDTO>(userExists);
+
             return Ok(new
             {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                user = userDetail
             });
         }
+
+        
     }
 }
