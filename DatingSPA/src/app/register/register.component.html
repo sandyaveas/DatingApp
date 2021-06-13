@@ -1,18 +1,82 @@
-<form #registerForm="ngForm" (ngSubmit)="register()">
+<form [formGroup]="registerForm" (ngSubmit)="register()">
   <h2 class="text-center text-primary">Sign Up</h2>
 
   <hr>
 
   <div class="form-group">
-    <input type="text" name="username" required [(ngModel)]="model.username" placeholder="Username" class="form-control">
+    <label class="control-label mr-4">I am a : </label>
+    <label class="radio-inline">
+      <input class="mr-1" type="radio" value="male" formControlName="gender"> Male
+    </label>
+    <label class="radio-inline ml-4">
+      <input class="mr-1" type="radio" value="female" formControlName="gender"> Female
+    </label>
   </div>
 
   <div class="form-group">
-    <input type="password" name="password" required [(ngModel)]="model.password" placeholder="Password" class="form-control">
+    <input type="text"
+      [ngClass]="{'is-invalid': registerForm.get('username').errors && registerForm.get('username').touched}"
+      formControlName="username" placeholder="Username" class="form-control is-invalid">
+    <div class="invalid-feedback">Username is required</div>
+  </div>
+
+  <div class="form-group">
+    <input type="text"
+      [ngClass]="{'is-invalid': registerForm.get('knownAs').errors && registerForm.get('knownAs').touched}"
+      formControlName="knownAs" placeholder="Known As" class="form-control is-invalid">
+    <div class="invalid-feedback">Known As is required</div>
+  </div>
+
+  <div class="form-group">
+    <input type="text" bsDatepicker [bsConfig]="{ isAnimated: true, adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY' }"
+      [ngClass]="{'is-invalid': registerForm.get('dateOfBirth').errors && registerForm.get('dateOfBirth').touched}"
+      formControlName="dateOfBirth" placeholder="Date Of Birth" class="form-control is-invalid">
+    <div class="invalid-feedback">Date of Birth is required</div>
+  </div>
+
+  <div class="form-group">
+    <input type="password"
+      [ngClass]="{'is-invalid': registerForm.get('password').errors && registerForm.get('password').touched}"
+      formControlName="password" placeholder="Password" class="form-control">
+    <div class="invalid-feedback"
+      *ngIf="registerForm.get('password').hasError('required') && registerForm.get('password').touched">Password is
+      required</div>
+    <div class="invalid-feedback"
+      *ngIf="registerForm.get('password').hasError('minlength') && registerForm.get('password').touched">Password must
+      be atleast 4 characters</div>
+    <div class="invalid-feedback"
+      *ngIf="registerForm.get('password').hasError('maxlength') && registerForm.get('password').touched">Password cannot
+      exceed 8 characters</div>
+  </div>
+
+  <div class="form-group">
+    <input type="password"
+      [ngClass]="{'is-invalid': (registerForm.get('confirmPassword').errors && registerForm.get('confirmPassword').touched)
+                                                  || (registerForm.get('confirmPassword').touched && registerForm.hasError('mismatch'))}"
+      formControlName="confirmPassword" placeholder="Confirm Password" class="form-control">
+    <div class="invalid-feedback"
+      *ngIf="registerForm.get('confirmPassword').hasError('required') && registerForm.get('confirmPassword').touched">
+      Confirm Password is required</div>
+    <div class="invalid-feedback"
+      *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword').touched">Password must match</div>
+  </div>
+
+  <div class="form-group">
+    <input type="text"
+      [ngClass]="{'is-invalid': registerForm.get('city').errors && registerForm.get('city').touched}"
+      formControlName="city" placeholder="City" class="form-control is-invalid">
+    <div class="invalid-feedback">City is required</div>
+  </div>
+
+  <div class="form-group">
+    <input type="text"
+      [ngClass]="{'is-invalid': registerForm.get('country').errors && registerForm.get('country').touched}"
+      formControlName="country" placeholder="Country" class="form-control is-invalid">
+    <div class="invalid-feedback">Country is required</div>
   </div>
 
   <div class="form-group text-center">
-    <button type="submit" class="btn btn-success mr-2">Register</button>
-    <button type="button" class="btn btn-outline-warning" (click)="cancel()" >Cancel</button>
+    <button [disabled]="!registerForm.valid" type="submit" class="btn btn-success mr-2">Register</button>
+    <button type="button" class="btn btn-outline-warning" (click)="cancel()">Cancel</button>
   </div>
 </form>

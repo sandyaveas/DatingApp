@@ -50,6 +50,9 @@ namespace DatingAPI.DataModel
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
+            user.Created = DateTime.Now;
+            user.LastActive = DateTime.Now;
+
             await _dataContext.Users.AddAsync(user);
             await _dataContext.SaveChangesAsync();
 

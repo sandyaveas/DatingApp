@@ -25,7 +25,8 @@ export class NavbarComponent implements OnInit {
 
     if(loginForm.valid){
       this.authService.login(this.model).subscribe(next => {
-        this.alertify.success('Logged in successfully');
+        this.alertify.success('Logged in successfully');       
+
       },error =>{
         this.alertify.error(error);
       },() =>{

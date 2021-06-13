@@ -3,10 +3,11 @@ import { BrowserModule, HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angu
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgxGalleryModule } from 'ngx-gallery-9';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import {routes} from './routes.routing';
 import { AppComponent } from './app.component';
@@ -51,13 +52,16 @@ export function tokenGetter(){
    ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(routes),
     NgxGalleryModule,
+    BsDatepickerModule.forRoot(),
     FileUploadModule,
     JwtModule.forRoot({
       config : {
