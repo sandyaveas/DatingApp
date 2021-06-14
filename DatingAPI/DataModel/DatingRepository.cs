@@ -1,10 +1,12 @@
-﻿using DatingAPI.Interfaces;
+﻿using DatingAPI.Helpers;
+using DatingAPI.Interfaces;
 using DatingAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DatingAPI.Helpers;
 
 namespace DatingAPI.DataModel
 {
@@ -32,9 +34,12 @@ namespace DatingAPI.DataModel
             return await _context.Users.Include(a => a.Photos).FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<List<User>> GetUsers()
+        public async Task<PagedList<User>> GetUsers(PaginationParams paginationParams)
         {
-            return await _context.Users.Include(a => a.Photos).ToListAsync();
+            var users = _context.Users.Include(a => a.Photos);
+
+
+            return await PagedList<User>.CreateAsync(users, paginationParams.PageNumber, paginationParams.PageSize);
         }
 
         public async Task<bool> SaveAll()

@@ -1,4 +1,5 @@
-﻿using DatingAPI.Models;
+﻿using DatingAPI.Helpers;
+using DatingAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace DatingAPI.Interfaces
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
         Task<bool> SaveAll();
-        Task<List<User>> GetUsers();
+        Task<PagedList<User>> GetUsers(PaginationParams paginationParams);
         Task<User> GetUser(int id);
         Task<Photo> GetPhoto(int id);
 
