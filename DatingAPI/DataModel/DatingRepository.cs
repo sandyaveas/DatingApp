@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DatingAPI.Helpers;
 
 namespace DatingAPI.DataModel
 {
@@ -48,6 +47,20 @@ namespace DatingAPI.DataModel
                 users = users.Where(a => a.DateOfBirth >= minDob && a.DateOfBirth <= maxDob);
             }
 
+            if (paginationParams.Likers)
+            {
+                var userLikers = await GetUserLikes(paginationParams.UserId, paginationParams.Likers);
+
+                users = users.Where(a => userLikers.Contains(a.Id));
+            }
+
+            if (paginationParams.Likees)
+            {
+                var userLikees = await GetUserLikes(paginationParams.UserId, paginationParams.Likers);
+
+                users = users.Where(a => userLikees.Contains(a.Id));
+            }
+
             if (!string.IsNullOrEmpty(paginationParams.OrderBy))
             { 
                 switch (paginationParams.OrderBy)
@@ -61,7 +74,18 @@ namespace DatingAPI.DataModel
                 }
             }
 
+
             return await PagedList<User>.CreateAsync(users, paginationParams.PageNumber, paginationParams.PageSize);
+        }
+
+        private async Task<IEnumerable<int>> GetUserLikes(int id, bool likers)
+        {
+            var user = await _context.Users.Include(a => a.Likers).Include(a => a.Likees).FirstOrDefaultAsync(a => a.Id == id);
+
+            if(likers)
+                return user.Likers.Where(a => a.LikeeId == id).Select(a => a.LikerId);
+            else
+                return user.Likees.Where(a => a.LikerId == id).Select(a => a.LikeeId);
         }
 
         public async Task<bool> SaveAll()
@@ -72,6 +96,11 @@ namespace DatingAPI.DataModel
         public async Task<Photo> GetPhoto(int id)
         {
             return await _context.Photos.FirstOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<Like> GetLike(int userId, int recepientId)
+        {
+            return await _context.Likes.FirstOrDefaultAsync(a => a.LikerId == userId && a.LikeeId == recepientId);
         }
     }
 }

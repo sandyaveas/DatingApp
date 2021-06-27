@@ -15,6 +15,6 @@ namespace DatingAPI.Interfaces
         Task<PagedList<User>> GetUsers(PaginationParams paginationParams);
         Task<User> GetUser(int id);
         Task<Photo> GetPhoto(int id);
-
+        Task<Like> GetLike(int userId, int recipientId);
     }
 }

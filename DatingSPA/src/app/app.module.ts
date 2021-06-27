@@ -31,6 +31,7 @@ import { MemberListResolver } from './_resolver/member-list.resolver';
 import { MemberEditResolver } from './_resolver/member-edit.resolver';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ListsResolver } from './_resolver/lists.resolver';
 
 //----Extended TimeAgoPipe Starts------//
 @Pipe({
@@ -87,7 +88,8 @@ export function tokenGetter(){
     ErrorInterceptorProvider, 
     MemberDetailResolver, 
     MemberListResolver,
-    MemberEditResolver
+    MemberEditResolver,
+    ListsResolver
   ],
   bootstrap: [AppComponent]
 })

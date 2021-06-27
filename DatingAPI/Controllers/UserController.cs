@@ -2,6 +2,7 @@
 using DatingAPI.DTOs;
 using DatingAPI.Helpers;
 using DatingAPI.Interfaces;
+using DatingAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -28,7 +29,7 @@ namespace DatingAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsers([FromQuery]PaginationParams paginationParams)
+        public async Task<IActionResult> GetUsers([FromQuery] PaginationParams paginationParams)
         {
             var currentUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
@@ -65,7 +66,7 @@ namespace DatingAPI.Controllers
 
             var user = await _repo.GetUser(id);
 
-            if(user is Models.User)
+            if (user is Models.User)
             {
                 _mapper.Map(updateUser, user);
 
@@ -78,9 +79,25 @@ namespace DatingAPI.Controllers
             throw new Exception();
         }
 
-        private bool ClaimType(Claim obj)
+        [HttpPost("{id}/like/{recepientId}")]
+        public async Task<IActionResult> LikeUser(int id, int recepientId)
         {
-            throw new NotImplementedException();
+            if (id != Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var like = await _repo.GetLike(id, recepientId);
+
+            if (like != null)
+                return BadRequest("You have already liked this user");
+
+            like = new Like { LikerId = id, LikeeId = recepientId };
+
+            _repo.Add<Like>(like);
+
+            if (await _repo.SaveAll())
+                return Ok();
+
+            return BadRequest("Failed to like user");
         }
     }
 
