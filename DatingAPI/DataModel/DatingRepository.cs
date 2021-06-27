@@ -36,8 +36,30 @@ namespace DatingAPI.DataModel
 
         public async Task<PagedList<User>> GetUsers(PaginationParams paginationParams)
         {
-            var users = _context.Users.Include(a => a.Photos);
+            var users = _context.Users.Include(a => a.Photos).OrderByDescending(b=> b.LastActive).AsQueryable();
 
+            users = users.Where(a => a.Id != paginationParams.UserId && a.Gender == paginationParams.Gender);
+            
+            if(paginationParams.minAge != 18 || paginationParams.maxAge != 99)
+            {
+                var minDob = DateTime.Today.AddYears(-paginationParams.maxAge - 1);
+                var maxDob = DateTime.Today.AddYears(-paginationParams.minAge);
+
+                users = users.Where(a => a.DateOfBirth >= minDob && a.DateOfBirth <= maxDob);
+            }
+
+            if (!string.IsNullOrEmpty(paginationParams.OrderBy))
+            { 
+                switch (paginationParams.OrderBy)
+                {
+                    case "created":
+                        users = users.OrderByDescending(a => a.Created);
+                        break;
+                    default:
+                        users = users.OrderByDescending(a => a.LastActive);
+                        break;
+                }
+            }
 
             return await PagedList<User>.CreateAsync(users, paginationParams.PageNumber, paginationParams.PageSize);
         }

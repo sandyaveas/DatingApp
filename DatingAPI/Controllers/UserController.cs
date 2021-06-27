@@ -30,6 +30,17 @@ namespace DatingAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers([FromQuery]PaginationParams paginationParams)
         {
+            var currentUserId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            paginationParams.UserId = currentUserId;
+
+            var userFromRepo = await _repo.GetUser(currentUserId);
+
+            if (string.IsNullOrEmpty(paginationParams.Gender))
+            {
+                paginationParams.Gender = userFromRepo.Gender == "male" ? "female" : "male";
+            }
+
             var users = await _repo.GetUsers(paginationParams);
             var usersToReturn = _mapper.Map<List<UserForListDTO>>(users);
 
