@@ -47,5 +47,9 @@ namespace DatingAPI.Models
         public List<Like> Likers { get; set; }
 
         public List<Like> Likees { get; set; }
+
+        public List<Message> MessageSent { get; set; }
+
+        public List<Message> MessageReceived { get; set; }
     }
 }

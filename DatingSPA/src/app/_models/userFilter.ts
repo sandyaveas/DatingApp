@@ -3,4 +3,5 @@ export class UserFilter {
     maxAge: number = 99;
     gender: string;
     orderBy: string = 'lastActive';
+
 }

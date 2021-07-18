@@ -16,5 +16,9 @@ namespace DatingAPI.Interfaces
         Task<User> GetUser(int id);
         Task<Photo> GetPhoto(int id);
         Task<Like> GetLike(int userId, int recipientId);
+        Task<Message> GetMessage(int id);
+        Task<PagedList<Message>> GetMessagesForUser(PaginationParams messageParams);
+        Task<List<Message>> GetMessageThread(int userId, int recipientId);
+
     }
 }

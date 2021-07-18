@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { PaginatedResult } from '../_models/pagination';
 import { User } from '../_models/User';
 import { UserFilter } from '../_models/userFilter';
+import { Message } from '../_models/message';
 
 
 @Injectable({
@@ -75,5 +76,51 @@ export class UserService {
 
   sendLike(id: number, recepientId: number): Observable<any> {
     return this.http.post<any>(this.baseUrl + "user/"+ id + "/like/" + recepientId, {});
+  }
+
+
+  getMessages(id: number, page?, itemsPerPage?, messageContainer?: string): Observable<PaginatedResult<Message[]>>{
+    const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
+
+    let params = new HttpParams();
+
+    params = params.append("MessageContainer", messageContainer);
+    
+    if(page && itemsPerPage){
+      params = params.append("pageNumber", page);
+      params = params.append("pageSize", itemsPerPage);
+      
+    }
+
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages', {observe: 'response', params})
+              .pipe(
+                map(response => {
+                  paginatedResult.result = response.body;
+
+                  if(response.headers.get('Pagination')){
+                    paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+                  }
+          
+                  return paginatedResult;
+                })
+              );
+  }
+
+  getMessageThread(id: number, recipientId: number) : Observable<Message[]>{
+
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + id + '/messages/thread/' + recipientId);
+  }
+
+  sendMessage(id: number, message: Message){
+    return this.http.post(this.baseUrl + 'users/' + id + '/messages', message);
+  }
+
+  
+  deleteMessage(userId: number, id: number){
+    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + id, {});
+  }
+
+  markAsRead(userId: number, id: number){
+    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + id + '/read', {}).subscribe();
   }
 }
