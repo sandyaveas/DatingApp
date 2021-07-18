@@ -93,11 +93,12 @@ namespace DatingAPI
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToFile("/index.html");
             });
         }
     }
