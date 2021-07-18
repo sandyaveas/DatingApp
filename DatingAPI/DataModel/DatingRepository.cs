@@ -30,16 +30,16 @@ namespace DatingAPI.DataModel
 
         public async Task<User> GetUser(int id)
         {
-            return await _context.Users.Include(a => a.Photos).FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<PagedList<User>> GetUsers(PaginationParams paginationParams)
         {
-            var users = _context.Users.Include(a => a.Photos).OrderByDescending(b=> b.LastActive).AsQueryable();
+            var users = _context.Users.OrderByDescending(b => b.LastActive).AsQueryable();
 
             users = users.Where(a => a.Id != paginationParams.UserId && a.Gender == paginationParams.Gender);
-            
-            if(paginationParams.minAge != 18 || paginationParams.maxAge != 99)
+
+            if (paginationParams.minAge != 18 || paginationParams.maxAge != 99)
             {
                 var minDob = DateTime.Today.AddYears(-paginationParams.maxAge - 1);
                 var maxDob = DateTime.Today.AddYears(-paginationParams.minAge);
@@ -62,7 +62,7 @@ namespace DatingAPI.DataModel
             }
 
             if (!string.IsNullOrEmpty(paginationParams.OrderBy))
-            { 
+            {
                 switch (paginationParams.OrderBy)
                 {
                     case "created":
@@ -80,9 +80,9 @@ namespace DatingAPI.DataModel
 
         private async Task<IEnumerable<int>> GetUserLikes(int id, bool likers)
         {
-            var user = await _context.Users.Include(a => a.Likers).Include(a => a.Likees).FirstOrDefaultAsync(a => a.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(a => a.Id == id);
 
-            if(likers)
+            if (likers)
                 return user.Likers.Where(a => a.LikeeId == id).Select(a => a.LikerId);
             else
                 return user.Likees.Where(a => a.LikerId == id).Select(a => a.LikeeId);
@@ -110,9 +110,7 @@ namespace DatingAPI.DataModel
 
         public async Task<PagedList<Message>> GetMessagesForUser(PaginationParams paginationParams)
         {
-            var messages = _context.Messages.Include(a => a.Sender).ThenInclude(a => a.Photos)
-                                            .Include(a => a.Recipient).ThenInclude(a => a.Photos)
-                                            .AsQueryable();
+            var messages = _context.Messages.AsQueryable();
 
             switch (paginationParams.MessageContainer)
             {
@@ -134,9 +132,7 @@ namespace DatingAPI.DataModel
 
         public async Task<List<Message>> GetMessageThread(int userId, int recipientId)
         {
-            var messages = _context.Messages.Include(a => a.Sender).ThenInclude(a => a.Photos)
-                                            .Include(a => a.Recipient).ThenInclude(a => a.Photos)
-                                            .Where(a => (a.RecipientId == userId && a.SenderId == recipientId && !a.RecipientDeleted)
+            var messages = _context.Messages.Where(a => (a.RecipientId == userId && a.SenderId == recipientId && !a.RecipientDeleted)
                                                      || (a.RecipientId == recipientId && a.SenderId == userId && !a.SenderDeleted))
                                             .OrderByDescending(a => a.DateSent)
                                             .ToListAsync();

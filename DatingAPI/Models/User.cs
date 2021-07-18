@@ -42,14 +42,14 @@ namespace DatingAPI.Models
 
         public string Country { get; set; }
 
-        public List<Photo> Photos { get; set; }
+        public virtual List<Photo> Photos { get; set; }
 
-        public List<Like> Likers { get; set; }
+        public virtual List<Like> Likers { get; set; }
 
-        public List<Like> Likees { get; set; }
+        public virtual List<Like> Likees { get; set; }
 
-        public List<Message> MessageSent { get; set; }
+        public virtual List<Message> MessageSent { get; set; }
 
-        public List<Message> MessageReceived { get; set; }
+        public virtual List<Message> MessageReceived { get; set; }
     }
 }
