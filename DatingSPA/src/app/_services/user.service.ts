@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { PaginatedResult } from '../_models/pagination';
-import { User } from '../_models/User';
-import { UserFilter } from '../_models/userFilter';
-import { Message } from '../_models/message';
+import { PaginatedResult } from 'src/app/_models/pagination';
+import { User } from 'src/app/_models/User';
+import { UserFilter } from 'src/app/_models/userFilter';
+import { Message } from 'src/app/_models/message';
 
 
 @Injectable({

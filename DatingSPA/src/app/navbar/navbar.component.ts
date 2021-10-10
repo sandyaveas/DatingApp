@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertifyService } from '../_services/alertify.service';
-import { AuthService } from '../_services/auth.service';
+import { AlertifyService } from 'src/app/_services/alertify.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-navbar',

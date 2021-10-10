@@ -3,9 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { PaginatedResult, Pagination } from 'src/app/_models/pagination';
 import { UserFilter } from 'src/app/_models/userFilter';
-import { User } from '../../_models/User';
-import { AlertifyService } from '../../_services/alertify.service';
-import { UserService } from '../../_services/user.service';
+import { User } from 'src/app/_models/User';
+import { AlertifyService } from 'src/app/_services/alertify.service';
+import { UserService } from 'src/app/_services/user.service';
 
 @Component({
   selector: 'app-member-list',
