@@ -58,7 +58,7 @@ namespace DatingAPI
             services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(typeof(DatingRepository).Assembly);
             
-            //JWT Token - Dev Branch
+            //JWT Token - Dev Branch - More commit
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters()
